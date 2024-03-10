@@ -57,10 +57,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 efrom="thenetxnewsletter@gmail.com"
-passw=""
+passw="aoihclfynjgbhpfq"
 msubj="NewsLetter"
-tolist="text.csv"
-newsimg="i.img"
+tolist=r"D:\NetX\NetXweb\NL Auto Mailing\testcsv.csv"
+newsimg=r"D:\NetX\NetXweb\NL Auto Mailing\Newsletter.png"
 
 msgroot=MIMEMultipart('related')
 msgroot['Subject']=msubj
@@ -71,7 +71,7 @@ msgroot.preamble='This is a multi-part message in MIME format.'
 msgalt=MIMEMultipart('alternative')
 msgroot.attach(msgalt)
 
-msghtml=MIMEText('htmlnx', 'html')
+msghtml=MIMEText(htmlnx, 'html')
 msgalt.attach(msghtml)
 
 fp=open(newsimg, 'rb')
@@ -84,9 +84,9 @@ msgroot.attach(msgimg1)
 context=ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
     server.login(efrom, passw)
-    with open(tolist, 'r') as file:
+    with open(tolist) as file:
         reader=csv.reader(file)
         next(reader)
         for name,email in reader:
-            msgroot['To']=email
-            server.sendmail(efrom, email, msgroot)
+            mailmsg=msgroot.as_string().format(name=name)
+            server.sendmail(efrom, email, mailmsg)
