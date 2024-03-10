@@ -59,7 +59,7 @@ from email.mime.image import MIMEImage
 efrom="thenetxnewsletter@gmail.com"
 passw=""
 msubj="NewsLetter"
-tolist="t.csv"
+tolist="text.csv"
 newsimg="i.img"
 
 msgroot=MIMEMultipart('related')
